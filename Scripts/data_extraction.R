@@ -14,7 +14,9 @@ Sys.setlocale(category = "LC_ALL", locale = "Greek")
 platoTitles <- platoIndex %>% 
                   select(gutenberg_id) %>%
                   gutenberg_download(., strip = F, meta_fields = "title", verbose = T) %>%
-                  filter(grepl("Title", text, ignore.case = T))
+                  filter(grepl("Title", text, ignore.case = T)) %>%
+                  mutate(titleClean = gsub("Title: ", "", text, fixed = T))
+  
                   group_by(gutenberg_id) %>%
                   slice(20) %>%
                   grepl("Title", ignore.case = T)
